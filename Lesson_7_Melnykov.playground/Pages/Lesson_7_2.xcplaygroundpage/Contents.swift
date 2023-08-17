@@ -3,192 +3,155 @@
 //Атрибути: 5+
 //Зовнішні функції: startGame(team: [Athlete], with: Equipment)
 
-final class Athlete {
-    var name: String
-    var surname: String
-    var age: Int
-    var sport: String
-    var isProfessional: Bool
-    
-    func isProfessional (_ decision: Bool){
-        isProfessional = decision ? true : false
-    }
-    init(name: String, surname: String, age: Int, sport: String, isProfessional: Bool){
-        self.name = name
-        self.surname = surname
-        self.age = age
-        self.sport = sport
-        self.isProfessional = isProfessional
+enum EquipmentType: String {
+    case without, soccerBall, volleyBall, basketBall, tennisRacquet, pingPongRacquet, chessBoard, cards, sword
+}
+
+class Athlete {
+    private var league = "Professional"
+    private func changeLeague(newLeague: String){
+        self.league = newLeague
     }
 }
 
-class Equipment {
-    var weight: Int
+class Equipment: Athlete {
+    var equipmentType: EquipmentType
     var count: Int
     
-    init(weight: Int, count: Int){
-        self.weight = weight
+    init(equipmentType: EquipmentType, count: Int){
+        self.equipmentType = equipmentType
         self.count = count
     }
 }
 
-class SoccerBall: Equipment{
-    var name = "Soccer ball"
+class Teams: Athlete {
+    var withoutTeam: [String] = []
+    var bascetbalTeam = ["Jordan", "James", "Abdul-Jabbar", "Russell", "Johnson", "Chamberlain"]
+    var footballTeam = ["Messi", "Ronaldo", "Xavi", "Iniesta", "Ibrahimovic", "Falcao"]
+    var volleyballTeam = ["Timmons", "Piccinini", "Zaytsev", "Reece", "Conte", "Marouf"]
+    var tennisTeam = ["Alcaraz", "Djokovic"]
+    var pingPongteam = ["Zhendong", "Chuqin"]
+    var chessTeam = ["Magnus", "Fabiano"]
+    var pokerTeam = ["Ivey", "Hellmuth", "Negreanu", "Brunson"]
+    var fencingTeam = ["Beljajeva", "Embrich"]
+   
+    func newBaskTeam(newBaskTeam: [String]) {
+            self.bascetbalTeam = newBaskTeam
+        }
+    func newFootTeam(footballTeam: [String]) {
+            self.footballTeam = footballTeam
+        }
+    func newvollTeam(volleyballTeam: [String]) {
+            self.volleyballTeam = volleyballTeam
+        }
+    func newTennisTeam(tennisTeam: [String]) {
+            self.tennisTeam = tennisTeam
+        }
+    func newPingPongTeam(pingPongteam: [String]) {
+            self.pingPongteam = pingPongteam
+        }
+    func newChessTeam(chessTeam: [String]) {
+            self.chessTeam = chessTeam
+        }
+    func newPokerTeam(pokerTeam: [String]) {
+            self.pokerTeam = pokerTeam
+        }
+    func newFencingTeam(fencingTeam: [String]) {
+            self.fencingTeam = fencingTeam
+        }
 }
 
-class VolleyballBall: Equipment{
-    var name = "Volleyball ball"
-}
-
-class BasketballBall: Equipment{
-    var name = "Basketball ball"
-}
-
-class TennisRacquet: Equipment{
-    var name = "Tennis racquet"
-}
-
-class PingPongRacquet: Equipment{
-    var name = "Ping-Pong racquet"
-}
-
-class ChessBoard: Equipment{
-    var name = "Chess board"
-}
-
-class Cards: Equipment{
-    var name = "Poker cards"
-}
-
-class FencingSword: Equipment{
-    var name = "encing sword"
-}
-
-class SportWithBall{
-    let equipment = "Ball"
+class Sport: Athlete {
     var duration: Int
     var playersCount: Int
-    var reservePlayers: Bool
     
-    public func info(){
-        print("This sport game uses a \(equipment) and the match lasts \(duration) minutes")
+    init(duration: Int, playersCount: Int){
+        self.duration = duration
+        self.playersCount = playersCount
     }
     
-    public func changePlayersCount (to newValue: Int) {
+    func infoDuration() {
+        print("The match lasts \(duration) minutes")
+    }
+    
+    func changePlayersCount(to newValue: Int) {
         self.playersCount = newValue
     }
     
-    public func addExtraTime (howMuch: Int) {
+    func addExtraTime(howMuch: Int) {
         self.duration += howMuch
     }
-    
-    init(duration: Int, playersCount: Int, reservePlayers: Bool){
-        self.duration = duration
-        self.playersCount = playersCount
-        self.reservePlayers = reservePlayers
-    }
 }
 
-class Basketball: SportWithBall {
-    var typeOfBasketball = "Standart"
-    func setMiniBasketball() {
-        self.typeOfBasketball = "Mini basketball"
-    }
+class Basketball: Sport {
+    let equipmentType: EquipmentType = .basketBall
+    let typeOfBasketball = "Standart"
 }
 
-class Football: SportWithBall {
-    var typeOfFotball = "Classic"
-    
-    func changeTypeMini (){
-        self.typeOfFotball = "Mini football"
-    }
+class Football: Sport {
+    let equipmentType: EquipmentType = .soccerBall
+    let typeOfFotball = "Classic"
 }
 
-class Volleyball: SportWithBall {
-    var typeOfSurface = "Wood"
-    
-    func setPlasticSurface (){
-        self.typeOfSurface = "Plastic"
-    }
+class Volleyball: Sport {
+    let equipmentType: EquipmentType = .volleyBall
+    let typeOfSurface = "Wood"
 }
 
-class Tennis {
-    let equipment = "Racquet"
-    var gameDuration: Int
-    var playersCount = 2
-    var gameCount: Int
-    
-    func setDoubles() {
-        self.playersCount = 4
-    }
-    
-    init(gameDuration: Int, gameCount: Int){
-        self.gameDuration = gameDuration
-        self.gameCount = gameCount
-    }
+class Tennis: Sport {
+    let equipmentType: EquipmentType = .tennisRacquet
+    let gameType = "Single player"
 }
 
-class PingPong: Tennis{
+class PingPong: Sport {
+    let equipmentType: EquipmentType = .pingPongRacquet
     let typeOfSurface = "Table"
 }
 
-class Chess {
-    let equipment = "Board"
-    let playersCount = 2
-    let figureCount = 32
+class Chess: Sport {
+    let equipmentType: EquipmentType = .chessBoard
+    let typeOfGame = "Classic chess"
 }
 
-class Poker {
-    let equipment = "Card"
-    let cardsCount = 52
-    var typeOfPoker = "Texas Holdem"
+class Poker: Sport {
+    let equipmentType: EquipmentType = .cards
+    let typeOfPoker = "Texas Holdem"
+}
+
+class Fencing: Sport {
+    let equipmentType: EquipmentType = .sword
+    let additionaleEquipment = "Fencing suit"
+}
+
+func startGame(team: Athlete, with: Equipment) {
     
-    func setOmaha(){
-        self.typeOfPoker = "Omaha"
+    if let team = team as? Teams{
+        switch with.equipmentType {
+        case .soccerBall:
+            print ("Football game started with team: \(team.footballTeam.joined(separator: ", "))")
+        case .basketBall:
+            print ("Basketball game started with team: \(team.bascetbalTeam.joined(separator: ", "))")
+        case .volleyBall:
+            print ("Volleyball game started with team: \(team.volleyballTeam.joined(separator: ", "))")
+        case .tennisRacquet:
+            print ("Tennis game started with team: \(team.tennisTeam.joined(separator: ", "))")
+        case .pingPongRacquet:
+            print ("PingPong game started with team: \(team.pingPongteam.joined(separator: ", "))")
+        case .chessBoard:
+            print ("Chess game started with team: \(team.chessTeam.joined(separator: ", "))")
+        case .cards:
+            print ("Poker game started with team: \(team.pokerTeam.joined(separator: ", "))")
+        case .sword:
+            print ("Fencing game started with team: \(team.fencingTeam.joined(separator: ", "))")
+        default:
+            break
+        }
+    } else {
+        print("Game can`t start")
     }
 }
 
-class Fencing {
-    let equipment = "Sword"
-    let victoryScore = 15
-    let optionalEquipment = "Fencing suit"
-}
+let teams = Teams()
+let eq = Equipment(equipmentType: .basketBall, count: 33)
+startGame(team: teams, with: eq)
 
-func startGame(team: [Athlete], with: Equipment){
-    var football = team.filter({$0.sport == "Football"})
-    var basketball = team.filter({$0.sport == "Basketball"})
-    var volleyball = team.filter({$0.sport == "Volleyball"})
-    var tennis = team.filter({$0.sport == "Tennis"})
-    var pingpong = team.filter({$0.sport == "Ping-pong"})
-    var chess = team.filter({$0.sport == "Chess"})
-    var poker = team.filter({$0.sport == "Poker"})
-    var fencing = team.filter({$0.sport == "Fencing"})
-    
-    switch with{
-    case is SoccerBall where football.count == team.count:
-        print("Football game started")
-    case is BasketballBall where basketball.count == team.count:
-        print("Basketball game started")
-    case is VolleyballBall where volleyball.count == team.count:
-        print("Volleyball game started")
-    case is TennisRacquet where tennis.count == team.count:
-        print("Tennis game started")
-    case is PingPongRacquet where pingpong.count == team.count:
-        print("PingPong game started")
-    case is ChessBoard where chess.count == team.count:
-        print("Chess game started")
-    case is Cards where poker.count == team.count:
-        print("Poker game started")
-    case is FencingSword where fencing.count == team.count:
-        print("Fencing game started")
-    default:
-        print("The the game can`t start because equipment not for this sport or athletes from various sports")
-    }
-}
-
-let a = Athlete(name: "Nikita", surname: "Melnykov", age: 28, sport: "Poker", isProfessional: true)
-let b = Athlete(name: "Irina", surname: "Iriniva", age: 20, sport: "Poker", isProfessional: false)
-let go = Volleyball(duration: 15, playersCount: 10, reservePlayers: true)
-let eq = Cards(weight: 100, count: 2)
-
-startGame(team: [a, b], with: eq)

@@ -68,12 +68,11 @@ class Cow: Mammal {
 }
 
 
-func getMilk(_ animal: Animal){
-    guard let animal = animal as? Mammal else { return }
+func getMilk(_ animal: Mammal){
     print("\(animal.name) is mammal, so it can give milk")
 }
 
-func getEgg(_ animal: Animal){
-    guard let animal = animal as? Parrot else { return }
-    print("\(animal.name) can give egg")
+func getEgg(_ animal: Bird){
+    print("\(animal.name) can give egg if it is not boy")
 }
+
